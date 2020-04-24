@@ -8,7 +8,6 @@ from tqdm.notebook import tqdm
 import torch.optim as optim
 from sklearn.model_selection import KFold, train_test_split
 import torch.nn.functional as F
-from efficientnet_pytorch import EfficientNet
 from torch.utils.data import DataLoader
 
 ##path

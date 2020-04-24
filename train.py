@@ -1,6 +1,7 @@
 from include import *
 from utils import *
 from model import SEResNext50
+from efficientnet_pytorch import EfficientNet
 from datasets import IntraDataset, aug_image, read_trainset, read_testset
 
 device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
@@ -10,7 +11,7 @@ test_df = read_testset(DATA_DIR + "stage_2_test.csv")
 
 
 def run_train(checkpoint=None):  
-    batch_size = 16
+
     train_dataset = IntraDataset(
         df = train_df.loc[train_idx],
         load_image_function=load_ssb_dicom,
@@ -42,6 +43,8 @@ def run_train(checkpoint=None):
     if checkpoint is None:
         start_epoch = 0
         model = SEResNext50()
+        # model = EfficientNet.from_pretrained('efficientnet-b0')
+        # model._fc = torch.nn.Linear(1280,n_classes)
 
         optimizer = torch.optim.Adam(model.parameters(), lr=0.0005, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.00002)
     else:
